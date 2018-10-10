@@ -1,0 +1,12 @@
+﻿.PGrid {
+    margin: 2%;
+    border-collapse: collapse;
+    width: 95%;
+}
+
+.Header {
+    font-weight: bold;
+    background-color: #60acf6;
+    color: #ff6a00;
+    text-decoration: none;
+}

@@ -1,0 +1,99 @@
+﻿@model IEnumerable<GymScheduler.ViewModels.ClassType>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link href="../Content/gridstyle.css" rel="stylesheet" />
+
+<h2>Class Type List</h2>
+
+@using (Html.BeginForm("Index", "ClassType", FormMethod.Get, new { @class = "Search-form" }))
+{
+    <div id="txtBox">
+        @Html.Label("Search Classes ")
+        <input type="text" name="q" />
+    </div>
+ 
+        <div id="radioList">
+            @Html.RadioButton("option", "Id")
+            @Html.Label("Id")
+            @Html.RadioButton("option", "CategoryName", true)
+            @Html.Label("CategoryName")
+            @Html.RadioButton("option", "Duration")
+            @Html.Label("Duration")
+        </div>
+        <div id="btnSearch">
+            <input type="submit" name = "submit" value="search" />
+           
+        </div>
+  
+}
+
+<br/>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div class="row">
+    @{
+        var grid = new WebGrid(source: Model, canPage: true, rowsPerPage: 4, defaultSort: "Id");
+        if (Model.Count() > 0)
+        {
+            <div><strong> @ViewBag.SearchParameter</strong> | @grid.TotalRowCount @Html.Label("Record(s) found")</div>
+            @grid.GetHtml(tableStyle: "PGrid", headerStyle: "Header", htmlAttributes: new { id = "DataTable" }, columns: grid.Columns(
+                                                                               grid.Column("Id"),
+                                                                               grid.Column("Name"),
+                                                                               grid.Column("Duration"),
+                                                                               grid.Column("CategoryName"),
+                                                                               grid.Column("", format: @<text>@Html.ActionLink("Edit", "Edit", "ClassType", new { id = item.Id }, new { target = "_blank" })</text>),
+                                                                               grid.Column("", format: @<text>@Html.ActionLink("Delete", "Delete", "ClassType", new { id = item.Id }, new { target = "_blank" })</text>)));
+
+
+
+        }
+        else
+        {
+            <hr />@Html.Label("No, Record(s) not found")<hr />
+        }
+    }
+</div>
+
+
+
+
+<!--
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Duration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem =>item.CategoryName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+    -->
